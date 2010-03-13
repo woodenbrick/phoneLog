@@ -11,7 +11,7 @@ class Record(db.Model):
     group = db.StringProperty()
     user = db.StringProperty()
     calltime = db.DateTimeProperty()
-    number = db.IntegerProperty()
+    number = db.StringProperty()
     
 class Add(RequestHandler):
     def post(self):
