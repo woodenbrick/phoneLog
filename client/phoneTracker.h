@@ -18,6 +18,7 @@ private:
     QString caller;
     void parseRecord(QXmlStreamReader& doc);
     void writeServer(QDateTime& date);
+    QString getFormattedDate(QDateTime& datetime);
 public:
     PhoneTracker(QWidget* parent=0);
     void readServer();

@@ -20,13 +20,12 @@ PhoneTracker::PhoneTracker(QWidget* parent) : QMainWindow(parent)
     dateEdit->setDateTime(currentTime);
     timeEdit->setDateTime(currentTime);
     number->setFocus(Qt::OtherFocusReason);
-    readServer();
 }
 
 void PhoneTracker::readServer()
 {
     model->clear();
-    model->appendRow(new QStandardItem("Downloading records..."));
+    statusMessage->setText("Downloading phone records...");
     request.setUrl(retrieveUrl);
     conn.get(request);
 }
@@ -34,23 +33,24 @@ void PhoneTracker::readServer()
 void PhoneTracker::requestFinishedCB(QNetworkReply *reply)
 {
     if(reply->error() != QNetworkReply::NoError)
+        statusMessage->setText(reply->errorString());
+    else
     {
-        qDebug() << reply->errorString();
-    }
-    if (reply->request().url().toString() == retrieveUrl.toString())
-    {
-        QXmlStreamReader doc(reply);
-        model->clear();
-        while(doc.readNext() && !doc.atEnd())
+        statusMessage->clear();
+        if (reply->request().url().toString() == retrieveUrl.toString())
         {
-            if(doc.name() == "record" && doc.tokenType() == QXmlStreamReader::StartElement)
-                parseRecord(doc);
+            QXmlStreamReader doc(reply);
+            model->clear();
+            while(doc.readNext() && !doc.atEnd())
+            {
+                if(doc.name() == "record" && doc.tokenType() == QXmlStreamReader::StartElement)
+                    parseRecord(doc);
+            }
+            callList->setColumnWidth(0, 140);
+            callList->setColumnWidth(1, 140);
+            callList->horizontalHeader()->setResizeMode(2, QHeaderView::Stretch);
         }
     }
-    callList->setColumnWidth(1, 250);
-    callList->setColumnWidth(2, 100);
-    callList->horizontalHeader()->setResizeMode(0, QHeaderView::Stretch);
-
 }
 
 void PhoneTracker::parseRecord(QXmlStreamReader& doc)
@@ -62,7 +62,7 @@ void PhoneTracker::parseRecord(QXmlStreamReader& doc)
         if(doc.name() == "date")
         {
             QDateTime t = QDateTime::fromString(doc.readElementText(), Qt::ISODate);
-            record.append(new QStandardItem(t.toString()));
+            record.append(new QStandardItem(getFormattedDate(t)));
         }
         if(doc.name() == "number")
             record.append(new QStandardItem(doc.readElementText()));
@@ -86,17 +86,21 @@ void PhoneTracker::on_addCall_clicked()
         dateEdit->setTime(timeEdit->time());
         time = dateEdit->dateTime();
     }
-    list.append(new QStandardItem(time.toString()));
+    list.append(new QStandardItem(getFormattedDate(time)));
     list.append(new QStandardItem(number->text()));
     list.append(new QStandardItem(caller));
     model->appendRow(list);
     writeServer(time);
     number->clear();
+    callList->setColumnWidth(0, 140);
+    callList->setColumnWidth(1, 140);
+    callList->horizontalHeader()->setResizeMode(2, QHeaderView::Stretch);
 }
 
 
 void PhoneTracker::writeServer(QDateTime& date)
 {
+    statusMessage->setText("Uploading record...");
     QString postData = QString("number=%1&group=%2&user=%3&date=%4").arg(
             number->text(), group, caller, date.toString(Qt::ISODate));
     QByteArray data(postData.toAscii());
@@ -117,10 +121,16 @@ void PhoneTracker::on_callMade_toggled()
     timeEdit->setEnabled(!callMade->isChecked());
 }
 
+QString PhoneTracker::getFormattedDate(QDateTime& datetime)
+{
+    return datetime.toString("d MMM HH:mmAP");
+}
+
 int main(int argc, char* argv[])
 {
     QApplication* app = new QApplication(argc, argv);
     PhoneTracker* tracker = new PhoneTracker();
     tracker->show();
+    tracker->readServer();
     return app->exec();
 }
