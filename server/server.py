@@ -29,6 +29,12 @@ class Retrieve(RequestHandler):
         self.response.headers['Content-type'] = "text/xml"
         self.response.out.write(render("numbers.xml", {"records" : records,
                                                        "group" : group}))
+
+class Delete(RequestHandler):
+    def post(self):
+        record = Record.all().filter("group =", self.request.get("group")).filter(
+            "calltime =", self.request.get("date")).get()
+        record.delete()
         
 class Error(RequestHandler):
     def get(self):
@@ -37,6 +43,7 @@ class Error(RequestHandler):
 app = WSGIApplication(
     [
         ("/add", Add),
+        ("/delete", Delete),
         ("/retrieve/(.*)", Retrieve),
         ("/.*", Error)
     ]
