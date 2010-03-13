@@ -16,7 +16,7 @@ class Record(db.Model):
 class Add(RequestHandler):
     def post(self):
         date = datetime.datetime(*time.strptime(self.request.get("date"), "%Y-%m-%dT%H:%M:%S")[0:6])
-        number = int(self.request.get("number"))
+        number = self.request.get("number")
         group = self.request.get("group")
         user = self.request.get("user")
         
