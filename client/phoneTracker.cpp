@@ -6,15 +6,15 @@ PhoneTracker::PhoneTracker(QWidget* parent) : QMainWindow(parent)
     group = "tard";
     caller = "Daniel";
     setupUi(this);
-    QRegExp re("[0-9]+");
+    QRegExp re("[0-9 ]+");
     number->setValidator(new QRegExpValidator(re, this));
     model =  new QStandardItemModel();
     callList->setModel(model);
     callList->setSelectionBehavior(QAbstractItemView::SelectRows);
     callList->verticalHeader()->hide();
     callList->horizontalHeader()->hide();
-    addUrl = "http://localhost:8080/add";
-    retrieveUrl = QString("http://localhost:8080/retrieve/%1").arg(group);
+    addUrl = "http://phonenumbertracker.appspot.com/add";
+    retrieveUrl = QString("http://phonenumbertracker.appspot.com/retrieve/%1").arg(group);
     connect(&conn, SIGNAL(finished(QNetworkReply*)), this, SLOT(requestFinishedCB(QNetworkReply*)));
     QDateTime currentTime = QDateTime::currentDateTime();
     dateEdit->setDateTime(currentTime);
@@ -33,6 +33,10 @@ void PhoneTracker::readServer()
 
 void PhoneTracker::requestFinishedCB(QNetworkReply *)
 {
+    if(reply->error() != QNetworkReply::NoError)
+    {
+        qDebug() << reply->errorString();
+    }
     if (reply->request().url().toString() == retrieveUrl.toString())
     {
         QXmlStreamReader doc(reply);
