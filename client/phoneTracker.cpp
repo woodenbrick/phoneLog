@@ -13,9 +13,6 @@ PhoneTracker::PhoneTracker(QWidget* parent) : QMainWindow(parent)
     callList->setSelectionBehavior(QAbstractItemView::SelectRows);
     callList->verticalHeader()->hide();
     callList->horizontalHeader()->hide();
-    callList->horizontalHeader()->resizeSection(1, 2000);
-    //callList->horizontalHeader()->resizeSection(1, 200);
-    //callList->horizontalHeader()->resizeSection(2, 200);
     addUrl = "http://localhost:8080/add";
     retrieveUrl = QString("http://localhost:8080/retrieve/%1").arg(group);
     connect(&conn, SIGNAL(finished(QNetworkReply*)), this, SLOT(requestFinishedCB(QNetworkReply*)));
@@ -29,7 +26,7 @@ PhoneTracker::PhoneTracker(QWidget* parent) : QMainWindow(parent)
 void PhoneTracker::readServer()
 {
     model->clear();
-    model->appendRow(new QStandardItem("Retrieving phone number list from server"));
+    model->appendRow(new QStandardItem("Downloading records..."));
     request.setUrl(retrieveUrl);
     reply = conn.get(request);
 }
@@ -46,6 +43,9 @@ void PhoneTracker::requestFinishedCB(QNetworkReply *)
                 parseRecord(doc);
         }
     }
+    callList->setColumnWidth(1, 150);
+    callList->setColumnWidth(2, 100);
+    callList->horizontalHeader()->setResizeMode(0, QHeaderView::Stretch);
 
 }
 
