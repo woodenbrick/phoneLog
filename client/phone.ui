@@ -5,116 +5,134 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>581</width>
+    <height>494</height>
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>MainWindow</string>
+   <string>Phone number Tracker</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset>
+    <normaloff>phone.png</normaloff>phone.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget" >
    <widget class="QTableView" name="callList" >
     <property name="geometry" >
      <rect>
-      <x>70</x>
-      <y>30</y>
-      <width>491</width>
+      <x>10</x>
+      <y>160</y>
+      <width>561</width>
       <height>271</height>
      </rect>
+    </property>
+    <property name="frameShadow" >
+     <enum>QFrame::Raised</enum>
     </property>
     <property name="alternatingRowColors" >
      <bool>true</bool>
     </property>
+    <property name="selectionMode" >
+     <enum>QAbstractItemView::SingleSelection</enum>
+    </property>
     <property name="selectionBehavior" >
      <enum>QAbstractItemView::SelectItems</enum>
     </property>
-   </widget>
-   <widget class="QPushButton" name="addCall" >
-    <property name="enabled" >
+    <property name="showGrid" >
      <bool>false</bool>
     </property>
-    <property name="geometry" >
-     <rect>
-      <x>400</x>
-      <y>370</y>
-      <width>80</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text" >
-     <string>Add New</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="number" >
-    <property name="geometry" >
-     <rect>
-      <x>130</x>
-      <y>370</y>
-      <width>251</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="callMade" >
-    <property name="geometry" >
-     <rect>
-      <x>130</x>
-      <y>420</y>
-      <width>201</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text" >
-     <string>Call made at current time</string>
-    </property>
-    <property name="checked" >
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QTimeEdit" name="timeEdit" >
-    <property name="enabled" >
+    <property name="cornerButtonEnabled" >
      <bool>false</bool>
     </property>
-    <property name="geometry" >
-     <rect>
-      <x>260</x>
-      <y>450</y>
-      <width>118</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="calendarPopup" >
-     <bool>true</bool>
-    </property>
    </widget>
-   <widget class="QDateEdit" name="dateEdit" >
-    <property name="enabled" >
-     <bool>false</bool>
-    </property>
+   <widget class="QWidget" name="" >
     <property name="geometry" >
      <rect>
-      <x>130</x>
-      <y>450</y>
-      <width>110</width>
-      <height>28</height>
+      <x>140</x>
+      <y>30</y>
+      <width>291</width>
+      <height>98</height>
      </rect>
     </property>
-    <property name="maximumDateTime" >
-     <datetime>
-      <hour>23</hour>
-      <minute>59</minute>
-      <second>59</second>
-      <year>7999</year>
-      <month>11</month>
-      <day>30</day>
-     </datetime>
-    </property>
-    <property name="displayFormat" >
-     <string>d MMM yyyy</string>
-    </property>
-    <property name="calendarPopup" >
-     <bool>true</bool>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout" >
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout" >
+       <item>
+        <widget class="QLineEdit" name="number" >
+         <property name="focusPolicy" >
+          <enum>Qt::StrongFocus</enum>
+         </property>
+         <property name="contextMenuPolicy" >
+          <enum>Qt::NoContextMenu</enum>
+         </property>
+         <property name="inputMask" >
+          <string/>
+         </property>
+         <property name="text" >
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addCall" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
+         <property name="text" >
+          <string>Add New</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout" >
+       <item row="0" column="0" colspan="2" >
+        <widget class="QCheckBox" name="callMade" >
+         <property name="text" >
+          <string>Call made at current time</string>
+         </property>
+         <property name="checked" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QDateEdit" name="dateEdit" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
+         <property name="maximumDateTime" >
+          <datetime>
+           <hour>23</hour>
+           <minute>59</minute>
+           <second>59</second>
+           <year>7999</year>
+           <month>11</month>
+           <day>30</day>
+          </datetime>
+         </property>
+         <property name="displayFormat" >
+          <string>d MMM yyyy</string>
+         </property>
+         <property name="calendarPopup" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <widget class="QTimeEdit" name="timeEdit" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
+         <property name="calendarPopup" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar" >
@@ -122,7 +140,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>581</width>
      <height>26</height>
     </rect>
    </property>

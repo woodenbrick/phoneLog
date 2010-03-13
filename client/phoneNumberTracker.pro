@@ -6,7 +6,7 @@ TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
 INCLUDEPATH += .
-
+QT += network
 # Input
 HEADERS += phoneTracker.h
 FORMS += phone.ui
