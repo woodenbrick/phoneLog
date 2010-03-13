@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<records group="{{group}}">
+{% for record in records %}
+    <record>
+        <date>{{record.calltime|date:"Y-m-d\TH:i:s"}}</date>
+        <number>{{record.number}}</number>
+        <caller>{{record.user}}</caller>
+    </record>
+{% endfor %}
+</records>
