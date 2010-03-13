@@ -28,10 +28,10 @@ void PhoneTracker::readServer()
     model->clear();
     model->appendRow(new QStandardItem("Downloading records..."));
     request.setUrl(retrieveUrl);
-    reply = conn.get(request);
+    conn.get(request);
 }
 
-void PhoneTracker::requestFinishedCB(QNetworkReply *)
+void PhoneTracker::requestFinishedCB(QNetworkReply *reply)
 {
     if(reply->error() != QNetworkReply::NoError)
     {
@@ -47,7 +47,7 @@ void PhoneTracker::requestFinishedCB(QNetworkReply *)
                 parseRecord(doc);
         }
     }
-    callList->setColumnWidth(1, 150);
+    callList->setColumnWidth(1, 250);
     callList->setColumnWidth(2, 100);
     callList->horizontalHeader()->setResizeMode(0, QHeaderView::Stretch);
 

@@ -13,7 +13,6 @@ private:
     QUrl retrieveUrl;
     QNetworkAccessManager conn;
     QNetworkRequest request;
-    QNetworkReply* reply;
     QStandardItemModel* model;
     QString group;
     QString caller;
