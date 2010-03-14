@@ -4,7 +4,7 @@
 PhoneTracker::PhoneTracker(QWidget* parent) : QMainWindow(parent)
 {
     group = "tard";
-    caller = "Daniel";
+    caller = "Boryana";
     setupUi(this);
     QRegExp re("[0-9 ]+");
     number->setValidator(new QRegExpValidator(re, this));

@@ -13,12 +13,11 @@ Compression=lzma
 SolidCompression=yes
 
 [Files]
-Source: "PhoneNumberTracker.exe"; DestDir: "{app}"
+Source: "release\PhoneNumberTracker.exe"; DestDir: "{app}"
 Source: "phone.png"; DestDir: "{app}"
-Source: "QtCore4.dll"; DestDir: "{app}";
-Source: "QtGui4.dll"; DestDir: "{app}";
-Source: "QtXml4.dll"; DestDir: "{app}";
-Source: "QtNetwork4.dll"; DestDir: "{app}";
+Source: "C:\Qt\2010.02.1\qt\bin\QtCore4.dll"; DestDir: "{app}";
+Source: "C:\Qt\2010.02.1\qt\bin\QtGui4.dll"; DestDir: "{app}";
+Source: "C:\Qt\2010.02.1\qt\bin\QtNetwork4.dll"; DestDir: "{app}";
 
 [Icons]
 Name: "{commonprograms}\Phone Number Tracker"; Filename: "{app}\PhoneNumberTracker.exe"
